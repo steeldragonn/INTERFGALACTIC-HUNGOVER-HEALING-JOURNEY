@@ -1,7 +1,8 @@
-const game = new Game();
+// const gameScreen = document.getElementById("gameScreen");
 
-const startButton = document.getElementsByClassName("button");
+const game = new Game(); // replica new instance of Game class
 
+const startButton = document.querySelector("button");
 startButton.addEventListener("click", function () {
   game.start();
 });
