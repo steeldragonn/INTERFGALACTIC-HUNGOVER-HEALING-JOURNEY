@@ -4,7 +4,7 @@ class Game {
     this.inGameScreen = document.querySelector("#in-game-screen");
     this.endGameScreen = document.querySelector("#end-game-screen");
 
-    this.gameArea = new Gamearena(this.inGameScreen, 200, 500, 1280, 1024);
+    this.gameArea = new Gamearena(this.inGameScreen, 1280, 200, 500, 1024);
 
     this.startButton = document.querySelector(".button");
     this.startButton.addEventListener("click", () => this.start());
@@ -21,8 +21,8 @@ class Game {
     //now we need create player and obstacle for gamearena
     this.player = new Player(
       this.inGameScreen,
-      100,
-      100,
+      (this.gameArea.width + this.gameArea.left) / 2,
+      this.gameArea.top,
       50,
       50,
       "js/images/robpattinsonPLAYER.png"
@@ -62,8 +62,9 @@ class Game {
   //how monsters randomly appear
   appearObstacle() {
     const obstacle = new Obstacle(this.inGameScreen, 50, 50);
-    const randomX = Math.floor(Math.random() * (this.width - obstacle.width));
-    const randomY = Math.floor(Math.random() * (this.width - obstacle.height));
+    const randomX = Math.floor(Math.random() * this.gameArea.width);
+    const randomY = Math.floor(Math.random() * this.gameArea.height);
+    console.log(randomX, randomY);
     obstacle.setPosition(randomX, randomY);
     this.obstacles.push(obstacle);
     //this.inGameScreen.appendChild(obstacle.element);
@@ -105,7 +106,7 @@ class Game {
 
   //updating all moves from player, if we are bad players - endgame
   update() {
-    this.player.move();
+    // this.player.move();
     this.updateLives();
     this.updateScore();
 
@@ -146,3 +147,20 @@ class Game {
 
 const game = new Game();
 //game.start();
+document.addEventListener("keydown", (event) => {
+  switch (event.code) {
+    case "ArrowLeft":
+      game.player.moveLeft();
+      break;
+    case "ArrowRight":
+      game.player.moveRight();
+      break;
+    case "ArrowUp":
+      game.player.moveUp();
+      break;
+    case "ArrowDown":
+      game.player.moveDown();
+      break;
+    default:
+  }
+});

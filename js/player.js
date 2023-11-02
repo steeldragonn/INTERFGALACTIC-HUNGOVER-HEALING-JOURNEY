@@ -5,8 +5,8 @@ class Player {
     this.top = top;
     // this.width = width;
     // this.height = height; ---- bcs we need it position but not all size
-    this.directionX = 0;
-    this.directionY = 0;
+    this.positionX = 0;
+    this.positionY = 0;
 
     this.element = document.createElement("img");
 
@@ -22,7 +22,7 @@ class Player {
     this.inGameScreen.appendChild(this.element);
     //we added this stupido to imGameScreen
 
-    this.move(); //AND NOW IT HAS TO MOVE
+    //this.move(); //AND NOW IT HAS TO MOVE
   }
 
   //how it will move
@@ -44,6 +44,23 @@ class Player {
 
     this.updatePosition();
   }
+
+  moveLeft() {
+    this.positionX--;
+    this.element.style.left = this.positionX + "px";
+  }
+  moveRight() {
+    this.positionX++;
+    this.element.style.left = this.positionX + "px";
+  }
+  moveUp() {
+    this.positionY--;
+    this.element.style.top = this.positionY + "px";
+  }
+  moveDown() {
+    this.positionY++;
+    this.element.style.top = this.positionY + "px";
+  }
   updatePosition() {
     this.element.style.left = `${this.left}px`;
     this.element.style.top = `${this.top}px`;
@@ -53,12 +70,3 @@ class Player {
     //   const maxTop = this.inGameScreen.offsetHeight - this.height - 10;
   }
 }
-
-const player = new Player(
-  document.getElementById("in-game-screen"),
-  10,
-  10,
-  10,
-  10,
-  "/js/images/robpattinsonPLAYER.png"
-);
