@@ -1,8 +1,8 @@
-// const gameScreen = document.getElementById("gameScreen");
+// // const gameScreen = document.getElementById("gameScreen");
 
-const game = new Game(); // replica new instance of Game class
+// const game = new Game();
 
-const startButton = document.querySelector("button");
-startButton.addEventListener("click", function () {
-  game.start();
-});
+// const startButton = document.querySelector(".button");
+// startButton.addEventListener("click", function () {
+//   game.start();
+// });

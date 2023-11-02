@@ -10,3 +10,5 @@ class Gamearena {
     this.inGameScreen.appendChild(this.element);
   }
 }
+
+//set gamearena position with all this.staff and added it to in ingamescreen
