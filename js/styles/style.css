@@ -73,3 +73,53 @@ img {
 .button:hover {
   background-color: #2a14d3;
 }
+
+#end-game-screen {
+  display: none;
+}
+
+#catingr {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+}
+
+#spongeingr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+}
+
+#absentingr {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /
+}
+
+#hungoverdandelion {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  
+}
+
+.ingredient {
+  width: 50px;
+  height: 50px;
+}
+
+#win-screen{
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  padding: 20px;
+  
+}

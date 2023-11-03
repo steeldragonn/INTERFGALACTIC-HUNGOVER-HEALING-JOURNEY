@@ -3,18 +3,24 @@ class Game {
     this.introScreen = document.querySelector("#intro-screen");
     this.inGameScreen = document.querySelector("#in-game-screen");
     this.endGameScreen = document.querySelector("#end-game-screen");
-
+    this.winGameScreen = document.querySelector("win-screen");
     this.gameArea = new Gamearena(this.inGameScreen, 1280, 200, 500, 1024);
-
     this.startButton = document.querySelector(".button");
     this.startButton.addEventListener("click", () => this.start());
-    //all before was to set screen,make arena on screen and add button
+    // all before was to set screen,make arena on screen and add button
+
+    this.ingredientElements = document.querySelectorAll(".ingredient");
+    // document.addEventListener("keydown", (event) =>
+    //   this.collectIngredients(event)
+    // );
 
     this.score = 0;
     this.lives = 3;
     this.scoreDisplay = document.getElementById("score-display");
     this.livesDisplay = document.getElementById("lives-display");
     //settingscors and lives
+
+    this.catingrClicks = 0;
 
     this.gameIsOver = false;
 
@@ -23,9 +29,9 @@ class Game {
       this.inGameScreen,
       (this.gameArea.width + this.gameArea.left) / 2,
       this.gameArea.top,
-      50,
-      50,
-      "js/images/robpattinsonPLAYER.png"
+      70,
+      70,
+      "js/images/NEWROB.png"
     );
 
     this.obstacle = new Obstacle(
@@ -34,12 +40,12 @@ class Game {
       50,
       20,
       20,
-      "js/images/smol.obstacle.png"
+      "js/images/SMOLOBSTACLEWITHBG.png"
     );
 
     this.obstacles = [];
 
-    this.startObstacleComing();
+    this.gameLoop();
   }
 
   //starting game
@@ -56,23 +62,50 @@ class Game {
     }
     this.startObstacleComing();
     this.update();
-    // window.requestAnimationFrame(() => this.gameLoop());
+    window.requestAnimationFrame(() => this.gameLoop());
   }
+
+  //imdonewiththisone
+  // collectIngredients(event) {
+  //   const ingredient = event.target;
+  //   if (event.code === "Space" && ingredient.classList.contains("ingredient")) {
+  //     switch (ingredient.id) {
+  //       case "catingr":
+  //         this.catingrClicks++;
+  //         if (this.catingrClicks === 2) {
+  //           this.score += 10;
+  //           this.catingrClicks = 0;
+  //         }
+  //         break;
+
+  //       case "spongeingr":
+  //         this.score += 20;
+  //         break;
+
+  //       case "absentingr":
+  //         this.score += 20;
+  //         break;
+
+  //       case "hungoverdandelion":
+  //         this.score += 15;
+  //         break;
+  //     }
+  //   }
+  //   this.updateScore();
+  // }
 
   //how monsters randomly appear
   appearObstacle() {
     const obstacle = new Obstacle(this.inGameScreen, 50, 50);
     const randomX = Math.floor(Math.random() * this.gameArea.width);
     const randomY = Math.floor(Math.random() * this.gameArea.height);
-    console.log(randomX, randomY);
     obstacle.setPosition(randomX, randomY);
     this.obstacles.push(obstacle);
-    //this.inGameScreen.appendChild(obstacle.element);
+    // this.inGameScreen.appendChild(obstacle.element);
   }
 
   startObstacleComing() {
     setInterval(() => {
-      console.log(this.obstacles.length);
       if (this.obstacles.length < 20) {
         this.appearObstacle();
       }
@@ -80,62 +113,75 @@ class Game {
   }
 
   //when obstacles apearing we are adding collide condition
-
   didCollide(player, obstacle) {
-    const playerLeft = player.left;
-    const playerRight = player.left + player.width;
-    const playerTop = player.top;
-    const playerBottom = player.top + player.height;
-
-    const obstacleLeft = obstacle.left;
-    const obstacleRight = obstacle.left + obstacle.width;
-    const obstacleTop = obstacle.top;
-    const obstacleBottom = obstacle.top + obstacle.height;
-
-    //if we avoid obstacles we are cool. if not then endgame?
+    const playerRect = player.element.getBoundingClientRect();
+    const obstacleRect = obstacle.element.getBoundingClientRect();
+    // console.log("position of the player =>", playerRect);
+    // console.log("position of the obstacle =>", obstacleRect);
+    // // checking collide between them
     if (
-      playerLeft < obstacleRight &&
-      playerRight > obstacleLeft &&
-      playerTop < obstacleBottom
+      playerRect.left < obstacleRect.right &&
+      playerRect.right > obstacleRect.left &&
+      playerRect.top > obstacleRect.bottom &&
+      playerRect.bottom < obstacleRect.top
     ) {
-      return true;
+      console.log(`collision`);
+      return true; // if  collide
+    } else {
+      console.log("YOU ARE FINE SO FAR!");
+      return false; // if no
     }
-    return false;
-    //endGame(); - in UPDATE we do this
+    this.updateLives();
   }
 
   //updating all moves from player, if we are bad players - endgame
   update() {
-    // this.player.move();
-    this.updateLives();
-    this.updateScore();
-
+    this.player.updatePosition();
     for (let i = 0; i < this.obstacles.length; i++) {
+      console.log(this.didCollide(this.player, this.obstacles[i]));
       if (this.didCollide(this.player, this.obstacles[i])) {
-        this.lives--;
+        console.log("YOU COLLIDED!");
+        this.obstacle.element.remove();
         this.obstacles.splice(i, 1);
+        this.lives--;
+        i--;
       }
     }
 
     if (this.lives === 0) {
       this.endGame();
     }
+    if (this.score === 85) {
+      this.winGame();
+    }
+
+    this.updateLives();
+    this.updateScore();
   }
 
   //score/lives update after all actions
   updateScore() {
     this.scoreDisplay.textContent = `Score: ${this.score}`;
   }
+
   updateLives() {
     this.livesDisplay.textContent = `Lives: ${this.lives}`;
   }
 
-  //ending game
+  winGame() {
+    this.gameIsOver = true;
+    this.inGameScreen.style.display = "none";
+    this.winGameScreen.style.display = "block";
+    this.player.element.remove();
+    this.obstacles.forEach((obstacle) => {
+      obstacle.element.remove();
+    });
+  }
+
   endGame() {
     this.gameIsOver = true;
-    this.gameScreen.style.display = "none";
+    this.inGameScreen.style.display = "none";
     this.gameEndScreen.style.display = "block";
-
     this.player.element.remove();
     this.obstacles.forEach((obstacle) => {
       obstacle.element.remove();
@@ -145,9 +191,10 @@ class Game {
 
 //so lets start game
 
+//adding event to arrows so they will work
 const game = new Game();
-//game.start();
 document.addEventListener("keydown", (event) => {
+  event.preventDefault();
   switch (event.code) {
     case "ArrowLeft":
       game.player.moveLeft();
