@@ -22,9 +22,29 @@
         1 for Rick: give him dandelion so he can sober up a little bit“ so lets
         start!
       </h2>
-      <button class="button">Start JOURNEY</button>
+      <button id="start-button" class="button">Start JOURNEY</button>
     </div>
-    <div id="in-game-screen"></div>
+    <div id="in-game-screen">
+      <div class="player-status">
+        <div id="score-display">Score:0</div>
+        <div id="lives-display">Lives:3</div>
+      </div>
+      <img id="catingr" src="./js/images/CAT2.png" class="ingredient" />
+      <img id="spongeingr" src="./js/images/SPONGE.jpeg" class="ingredient" />
+      <img id="absentingr" src="./js/images/ABSENT.webp" class="ingredient" />
+      <img
+        id="hungoverdandelion"
+        src="/js/images/dandelion for rick.png"
+        class="ingredient"
+      />
+    </div>
+    <div id="win-screen">
+      <h1>CONGRATULATIONS!</h1>
+      <p>
+        Now you're back to ever-increasing inflation, a possible nuclear war or
+        a zombie apocalypse. But at least you pet the fluffy cutie TWICE.
+      </p>
+    </div>
     <div id="end-game-screen"></div>
 
     <script type="text/javascript" src="js/obstacle.js"></script>

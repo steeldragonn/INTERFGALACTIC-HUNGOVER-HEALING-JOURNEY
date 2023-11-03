@@ -1,50 +1,35 @@
 class Player {
-  constructor(gameScreen, left, top, width, height, img) {
-    this.gameScreen = gameScreen;
+  constructor(inGameScreen, left, top, width, height, img) {
+    this.inGameScreen = inGameScreen;
     this.left = left;
     this.top = top;
     this.width = width;
     this.height = height;
+    this.directionX = 0;
+    this.directionY = 0;
     this.img = img;
-    //("/images/robpattinsonPLAYER.png");
-
     this.element = document.createElement("img");
+    this.element.classList.add("player");
     this.element.src = this.img;
     this.element.style.position = "absolute";
     this.element.style.left = `${left}px`;
+    this.element.style.top = `${top}px`;
     this.element.style.width = `${width}px`;
     this.element.style.height = `${height}px`;
-    this.element.style.top = `${top}px`;
-    this.gameScreen.appendChild(this.element);
-    this.move();
+    this.inGameScreen.appendChild(this.element);
   }
 
   move() {
-    document.addEventListener("keydown", (event) => {
-      switch (event.key) {
-        case "ArrowUp":
-          this.top -= 10;
-          break;
-        case "ArrowDown":
-          this.top += 10;
-          break;
-        case "ArrowLeft":
-          this.left -= 10;
-          break;
-        case "ArrowRight":
-          this.left += 10;
-          break;
-      }
+    this.left += this.directionX;
+    this.top += this.directionY;
+    const boundaries = {
+      minLeft: 10,
+      maxLeft: this.inGameScreen.offsetWidth - this.width - 10,
+      minTop: 10,
+      maxTop: this.inGameScreen.offsetHeight - this.height - 10,
+    };
 
-      this.updatePosition();
-    });
-  }
-
-  updatePosition() {
-    const minLeft = 10;
-    const minTop = 10;
-    const maxLeft = this.gameScreen.offsetWidth - this.width - 10;
-    const maxTop = this.gameScreen.offsetHeight - this.height - 10;
+    const { minLeft, maxLeft, minTop, maxTop } = boundaries;
 
     if (this.left < minLeft) {
       this.left = minLeft;
@@ -62,18 +47,26 @@ class Player {
       this.top = maxTop;
     }
 
+    this.updatePosition();
+  }
+
+  updatePosition() {
     this.element.style.left = `${this.left}px`;
     this.element.style.top = `${this.top}px`;
   }
+
+  didCollide(obstacle) {
+    const playerRect = this.element.getBoundingClientRect();
+    const obstacleRect = obstacle.element.getBoundingClientRect();
+    if (
+      playerRect.left < obstacleRect.right &&
+      playerRect.right > obstacleRect.left &&
+      playerRect.top < obstacleRect.bottom &&
+      playerRect.bottom > obstacleRect.top
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
-
-const player = new Player(
-  document.getElementById("game-screen"),
-  50,
-  50,
-  50,
-  50,
-  "/js/images/robpattinsonPLAYER.png"
-);
-
-// update players position with arrow keys
