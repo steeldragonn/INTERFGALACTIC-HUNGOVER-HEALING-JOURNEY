@@ -129,3 +129,7 @@ img {
   left : 50%;
 }
 
+
+#end-game-screen {
+  display: none;
+}

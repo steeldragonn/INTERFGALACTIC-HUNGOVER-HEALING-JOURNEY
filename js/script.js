@@ -8,8 +8,12 @@ window.onload = function () {
   });
 
   function startGame() {
-    console.log("start game");
     game.start();
+    game.gameLoop();
+  }
+
+  if (game.lives === 0) {
+    game.endGame();
   }
 
   function handleKeydown(event) {

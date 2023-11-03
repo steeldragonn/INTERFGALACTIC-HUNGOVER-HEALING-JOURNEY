@@ -23,9 +23,9 @@ class Player {
     this.left += this.directionX;
     this.top += this.directionY;
     const boundaries = {
-      minLeft: 10,
+      minLeft: 5,
       maxLeft: this.inGameScreen.offsetWidth - this.width - 10,
-      minTop: 10,
+      minTop: 5,
       maxTop: this.inGameScreen.offsetHeight - this.height - 10,
     };
 
@@ -46,6 +46,13 @@ class Player {
     if (this.top > maxTop) {
       this.top = maxTop;
     }
+
+    console.log(
+      "PLAYER LEFT POSITION",
+      this.left,
+      "PLAYER TOP POSITION",
+      this.top
+    );
 
     this.updatePosition();
   }

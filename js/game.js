@@ -79,9 +79,10 @@ class Game {
   }
 
   endGame() {
+    console.log("I am done bro!");
     this.gameIsOver = true;
-    // this.gameScreen.style.display = "none";
-    // this.gameEndScreen.style.display = "block";
+    this.inGameScreen.style.display = "none";
+    this.endGameScreen.style.display = "block";
 
     // this.player.element.remove();
     // this.obstacles.forEach((obstacle) => {
