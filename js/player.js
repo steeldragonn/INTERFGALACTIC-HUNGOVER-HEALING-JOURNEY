@@ -46,14 +46,6 @@ class Player {
     if (this.top > maxTop) {
       this.top = maxTop;
     }
-
-    console.log(
-      "PLAYER LEFT POSITION",
-      this.left,
-      "PLAYER TOP POSITION",
-      this.top
-    );
-
     this.updatePosition();
   }
 
@@ -71,6 +63,29 @@ class Player {
       playerRect.top < obstacleRect.bottom &&
       playerRect.bottom > obstacleRect.top
     ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  didCollide(ingredient) {
+    if (ingredient.collected) {
+      return false;
+    }
+    // if (!this.ingredientPressCounters[catingr]) {
+    //   this.ingredientPressCounters[catingr] = 0;
+    // }
+    const playerRect = this.element.getBoundingClientRect();
+    const ingredientRect = ingredient.element.getBoundingClientRect();
+    if (
+      playerRect.left < ingredientRect.right &&
+      playerRect.right > ingredientRect.left &&
+      playerRect.top < ingredientRect.bottom &&
+      playerRect.bottom > ingredientRect.top
+    ) {
+      ingredient.collected = true;
+      ingredient.element.style.display = "none";
       return true;
     } else {
       return false;

@@ -3,6 +3,8 @@ class Game {
     this.introScreen = document.querySelector("#intro-screen");
     this.inGameScreen = document.querySelector("#in-game-screen");
     this.endGameScreen = document.querySelector("#end-game-screen");
+    this.winGameScreen = document.querySelector("#win-screen");
+    this.nextLevel = document.querySelector("#nextlevel-screen");
     this.gameArea = new Gamearena(this.inGameScreen, 200, 500, 1280, 1024);
     this.score = 0;
     this.lives = 7;
@@ -11,13 +13,21 @@ class Game {
     this.gameIsOver = false;
     this.player = new Player(
       this.inGameScreen,
-      550,
-      350,
-      100,
-      150,
-      "./js/images/robpattinsonPLAYER.png"
+      70,
+      70,
+      70,
+      70,
+      "/js/images/pattinson.png"
     );
+
     this.obstacles = [];
+    this.ingredients = [
+      new Ingredient(this.inGameScreen, "catingr"),
+      new Ingredient(this.inGameScreen, "spongeingr"),
+      new Ingredient(this.inGameScreen, "absentingr"),
+      new Ingredient(this.inGameScreen, "hungoverdandelion"),
+    ];
+    this.ingredientClickCounters = {};
   }
 
   start() {
@@ -44,8 +54,19 @@ class Game {
         this.obstacles.splice(i, 1);
       }
     }
+    for (let i = 0; i < this.ingredients.length; i++) {
+      if (this.player.didCollide(this.ingredients[i])) {
+        this.score++;
+        this.ingredients[i].collected = true;
+        this.ingredients[i].element.style.display = "none";
+      }
+    }
+
     if (this.lives <= 0) {
       this.endGame();
+    }
+    if (this.score >= 4) {
+      this.winGame();
     }
 
     this.updateLives();
@@ -64,10 +85,10 @@ class Game {
   startObstacleComing() {
     if (this.gameIsOver) return;
     setInterval(() => {
-      if (this.obstacles.length < 9) {
+      if (this.obstacles.length < 80) {
         this.appearObstacle();
       }
-    }, 3000);
+    }, 400);
   }
 
   updateScore() {
@@ -79,14 +100,21 @@ class Game {
   }
 
   endGame() {
-    console.log("I am done bro!");
     this.gameIsOver = true;
+    this.nextLevel.style.display = "none";
     this.inGameScreen.style.display = "none";
     this.endGameScreen.style.display = "block";
-
-    // this.player.element.remove();
-    // this.obstacles.forEach((obstacle) => {
-    //   obstacle.elemen.remove();
-    // });
+  }
+  winGame() {
+    this.gameIsOver = true;
+    this.inGameScreen.style.display = "none";
+    this.nextLevel.style.display = "block";
+    // this.winGameScreen.style.display = "block";
+  }
+  winLevel() {
+    this.gameIsOver = true;
+    this.inGameScreen.style.display = "none";
+    this.nextLevel.style.display = "none";
+    this.winGameScreen.style.display = "block";
   }
 }

@@ -8,20 +8,21 @@
   </head>
   <body>
     <div id="intro-screen">
-      <img src="./js/images/START PAGE PIC.png" style="display: inline-block" />
-      <h1>
+      <img src="./js/images/gameneter.png" />
+      <h3>
         You are Robert Pattinson who wake up on random planet after partying too
-        hard with Rick last night. Rick is still drunk. So you, little pumpkin,
-        have to collect essential ingredients to fix portal gun if you want to
-        come back to Earth.
-      </h1>
+        hard with Rick last night. Rick is still drunk.
+        <h5>
+          So you, little pumpkin, have to collect essential ingredients to fix
+          portal gun if you want to come back to Earth. You need to collect 4
+          ingredients to come back to Earth.
+        </h5>
+      </h3>
       <h2>
-        “You need to collect 4 ingredients to come back to Earth: 3 for portal
-        gun: -absent; - sponge: - cat hair ( but be careful, this fluffy cutie
-        needs to be clicked 3 times bcs first you pet - second you collect hair)
-        1 for Rick: give him dandelion so he can sober up a little bit“ so lets
-        start!
+        <p2> 3 for portal gun: 1.absent 2.sponge 3.cat hair </p2>
       </h2>
+      <p1> 1 for Rick: 1 dandelion so he can sober up a little bit </p1>
+      <h4>lets s t a r t !</h4>
       <button id="start-button" class="button">Start JOURNEY</button>
     </div>
     <div id="in-game-screen">
@@ -38,12 +39,31 @@
         class="ingredient"
       />
     </div>
+    <div id="nextlevel-screen">
+      <h7>
+        Portal gun worked not as exprected and now we are on planet which calls
+      </h7>
+      <p9>ANSWER OR DIE</p9>
+      <div id="question-container"></div>
+      <div id="options-container"></div>
+      <img src="./js/images/volcano2.png" />
+      <!-- id="nextlevel"  -->
+    </div>
+
+    <div class="image-container">
+      <img src="path/to/your/image.jpg" alt="Your Image" />
+      <div class="text-overlay">
+        <h1>Your Text Goes Here</h1>
+      </div>
+    </div>
+
     <div id="win-screen">
       <h1>CONGRATULATIONS!</h1>
       <p>
         Now you're back to ever-increasing inflation, a possible nuclear war or
-        a zombie apocalypse. But at least you pet the fluffy cutie TWICE.
+        a zombie apocalypse. But at least you pet the fluffy cutie.
       </p>
+      <img id="winner" src="./js/images/dandelion-16.png" />
     </div>
     <div id="end-game-screen">
       <h1>YOU LOST, CUTIE!</h1>
@@ -51,8 +71,9 @@
         But maybe opportunity to stay at random planet with Rick FOREVER is not
         that bad. At least you can get drunk too.
       </p>
+      <img id="loser" src="./js/images/mars land.jpeg" />
     </div>
-
+    <script type="text/javascript" src="js/ingredient.js"></script>
     <script type="text/javascript" src="js/obstacle.js"></script>
     <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/gamearena.js"></script>
